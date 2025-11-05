@@ -25,7 +25,23 @@ def create_name(name:str):
 
 @app.get("/names/{name_id}")
 def get_names_detail(name_id:int):
-    for name in names_list:
-        if name["id"] == name_id:
-            return name
+    for item in names_list:
+        if item["id"] == name_id:
+            return item
+    return {"detail": "Object Not Found" }
+
+@app.put("/names/{name_id}")
+def update_names_detail(name_id:int, name:str):
+    for item in names_list:
+        if item["id"] == name_id:
+            item["name"] = name
+            return item
+    return {"detail": "Object Not Found" }
+
+@app.delete("/names/{name_id}")
+def delete_name(name_id:int):
+    for item in names_list:
+        if item["id"] == name_id:
+            names_list.remove(item)
+            return {"detail": "Object Removed Successfuly" }
     return {"detail": "Object Not Found" }
