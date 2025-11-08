@@ -1,8 +1,16 @@
 from fastapi import FastAPI, Query, status, HTTPException, Path, Form, Body, File, UploadFile
+from contextlib import asynccontextmanager
 from fastapi.responses import JSONResponse
 from random import randint
 from typing import Annotated
-app = FastAPI()
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    print("application startup")
+    yield
+    print("application shutdown")
+
+app = FastAPI(lifespan=lifespan)
 
 names_list=[
     {"id":1, "name":"a"},
